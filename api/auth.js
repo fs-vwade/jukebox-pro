@@ -31,7 +31,7 @@ router.post("/register", async (req, res, next) => {
 	try {
 		const customer = await prisma.customer.register(email, password);
 		const token = createToken(customer.id);
-		res.status(201).json({ token });
+		res.status(201).json({ token, message: "User registration." });
 	} catch (e) {
 		next(e);
 	}
@@ -41,7 +41,7 @@ router.post("/login", async (req, res, next) => {
 	try {
 		const customer = await prisma.customer.login(email, password);
 		const token = createToken(customer.id);
-		res.json({ token });
+		res.json({ token, message: "User logged in." });
 	} catch (e) {
 		next(e);
 	}
