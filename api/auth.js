@@ -1,9 +1,9 @@
-const express = require("express");
 const prisma = require("../prisma");
-
+const express = require("express");
 const router = express.Router();
+
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.new.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const createToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: "1d" });
 
