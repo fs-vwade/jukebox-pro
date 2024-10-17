@@ -26,6 +26,26 @@ const verifyToken = async (req, res, next) => {
 router.use(verifyToken);
 
 // add any auth routes here
+router.post("/register", async (req, res, next) => {
+	const { email, password } = req.body;
+	try {
+		const customer = await prisma.customer.register(email, password);
+		const token = createToken(customer.id);
+		res.status(201).json({ token });
+	} catch (e) {
+		next(e);
+	}
+});
+router.post("/login", async (req, res, next) => {
+	const { email, password } = req.body;
+	try {
+		const customer = await prisma.customer.login(email, password);
+		const token = createToken(customer.id);
+		res.json({ token });
+	} catch (e) {
+		next(e);
+	}
+});
 
 function authenticate(req, res, next) {
 	if (req.customer) next();
