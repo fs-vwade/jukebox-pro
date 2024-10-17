@@ -24,3 +24,15 @@ const verifyToken = async (req, res, next) => {
 };
 
 router.use(verifyToken);
+
+// add any auth routes here
+
+function authenticate(req, res, next) {
+	if (req.customer) next();
+	else next({ status: 401, message: "You are not logged in." });
+}
+
+module.exports = {
+	router,
+	authenticate,
+};
