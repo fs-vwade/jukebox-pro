@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
 	try {
 		res.json({
 			playlists: await prisma.playlst.findMany({
-				where: { ownerId: req.customer.id },
+				where: { ownerId: req.user.id },
 			}),
 		});
 	} catch (e) {
@@ -46,7 +46,7 @@ router.post("/", async (req, res, next) => {
 				data: {
 					name,
 					description,
-					owner: { connect: { id: req.customer.id } },
+					owner: { connect: { id: req.user.id } },
 					tracks: {
 						connect: trackIds.map((e) => ({ id: Number(e) })),
 					},

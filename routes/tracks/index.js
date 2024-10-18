@@ -20,11 +20,11 @@ router.get("/:id", async (req, res, next) => {
 		const track = await prisma.track.findUnique({ where: { id: Number(id) } });
 
 		if (track) {
-			if (req.customer) {
+			if (req.user) {
 				res.json({
 					...track,
 					playlists: await prisma.playlist.findMany({
-						where: { ownerId: req.customer.id, tracks: { some: { id } } },
+						where: { ownerId: req.user.id, tracks: { some: { id } } },
 					}),
 				});
 			} else {
