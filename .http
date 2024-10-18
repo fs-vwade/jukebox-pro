@@ -1,6 +1,17 @@
 @host=http://localhost:3000
 
 ###
+# @name login
+POST {{host}}/register
+Content-Type: application/json
+
+{
+	"username": "foobar1",
+	"password": 12345677
+}
+
+
+###
 GET {{host}}/users
 
 ###
