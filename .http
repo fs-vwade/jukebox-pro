@@ -22,20 +22,37 @@ Content-Type: application/json
 }
 
 ###
+@token={{login.response.body.token}}
+
+###
 GET {{host}}/tracks
 
 ###
+GET {{host}}/tracks/{{id}}
+
+###
+GET {{host}}/tracks/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
 GET {{host}}/playlists
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 GET {{host}}/playlists/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 POST {{host}}/playlists
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 {
 	"name": "1010",
-	"description": "",
-	"trackIds": [11,12,13]
+	"description": "10",
+	"trackIds": [10,11, 1]
 }

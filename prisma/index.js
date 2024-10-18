@@ -15,6 +15,18 @@ const prisma = new PrismaClient().$extends({
 				throw Error("Invalid password");
 			},
 		},
+		playlist: {
+			new: async (name, description, tracks, owner) => {
+				return await prisma.playlist.create({
+					data: {
+						name: String(name),
+						description: String(description),
+						owner: { connect: { id: owner.id } },
+						tracks: { connect: tracks.map((e) => ({ id: +e })) },
+					},
+				});
+			},
+		},
 	},
 });
 

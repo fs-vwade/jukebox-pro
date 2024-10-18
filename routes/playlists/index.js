@@ -6,9 +6,12 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
 	try {
+		const { user } = req;
+		console.log(user.id);
 		res.json({
-			playlists: await prisma.playlst.findMany({
-				where: { ownerId: req.user.id },
+			playlists: await prisma.playlist.findMany({
+				where: { ownerId: user.id },
+				include: { tracks: true },
 			}),
 		});
 	} catch (e) {
@@ -40,18 +43,12 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
 	try {
 		const { name, description, trackIds } = req.body;
+		console.log(req.body);
+		console.log(name, description, trackIds);
+		console.log(!!name, !!description, !!trackIds);
 
 		if (name && description && Array.isArray(trackIds)) {
-			await prisma.playlist.create({
-				data: {
-					name,
-					description,
-					owner: { connect: { id: req.user.id } },
-					tracks: {
-						connect: trackIds.map((e) => ({ id: Number(e) })),
-					},
-				},
-			});
+			await prisma.playlist.new(name, description, trackIds, req.user);
 			res.status(201).send(`Playlist created successfully.`);
 		} else {
 			next({ status: 400, message: "Bad request." });
