@@ -1,7 +1,8 @@
 @host=http://localhost:3000
+@id=10
 
 ###
-# @name login
+# @name register
 POST {{host}}/register
 Content-Type: application/json
 
@@ -10,13 +11,15 @@ Content-Type: application/json
 	"password": 12345677
 }
 
-
 ###
-GET {{host}}/users
+# @name login
+POST {{host}}/login
+Content-Type: application/json
 
-###
-@id=10
-GET {{host}}/users/{{id}}
+{
+	"username": "foobar1",
+	"password": 12345677
+}
 
 ###
 GET {{host}}/tracks
@@ -32,6 +35,7 @@ POST {{host}}/playlists
 Content-Type: application/json
 
 {
-	"userId": 10,
-	"songIdList": [11,12,13]
+	"name": "1010",
+	"description": "",
+	"trackIds": [11,12,13]
 }
